@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.db.models import Count
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 from django.shortcuts import render, redirect, get_object_or_404
