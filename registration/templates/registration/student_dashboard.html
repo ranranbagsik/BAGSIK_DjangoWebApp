@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+</head>
+<body>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>Student Dashboard</h1>
+        
+        <!-- Logout Form -->
+        <form action="{% url 'logout' %}" method="post" style="margin: 0;">
+            {% csrf_token %}
+            <button type="submit">
+                Logout
+            </button>
+        </form>
+    </div>
+
+    <!-- AJAX Student Count Target -->
+    <h2>Total Students: <span id="student-count">0</span></h2>
+
+    <!-- AJAX Status Feedback Messages -->
+    <p id="loading-message">Loading students...</p>
+    <p id="error-message" style="color: red;"></p>
+
+    <!-- Dynamic AJAX Student Data Table -->
+    <table border="1" id="student-table" style="width: 100%; text-align: left;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Program</th>
+                <th>Year Level</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody id="student-table-body">
+            <!-- Populated dynamically via student_dashboard.js -->
+        </tbody>
+    </table>
+
+    <hr>
+    <h2>Students by Program</h2>
+    <table border="1">
+        <tr><th>Program</th><th>Total</th></tr>
+        {% for item in program_summary %}
+            <tr><td>{{ item.program }}</td><td>{{ item.total }}</td></tr>
+        {% empty %}
+            <tr><td colspan="2">No program data available.</td></tr>
+        {% endfor %}
+    </table>
+
+    <hr>
+    <h2>Students by Year Level</h2>
+    <table border="1">
+        <tr><th>Year Level</th><th>Total</th></tr>
+        {% for item in year_summary %}
+            <tr><td>{{ item.year_level }}</td><td>{{ item.total }}</td></tr>
+        {% empty %}
+            <tr><td colspan="2">No year-level data available.</td></tr>
+        {% endfor %}
+    </table>
+
+    <hr>
+    <a href="{% url 'student_list' %}">Back to Student List</a>
+
+    <!-- JavaScript File -->
+    <script src="{% static 'registration/js/student_dashboard.js' %}"></script>
+</body>
+</html>
