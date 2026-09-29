@@ -11,16 +11,31 @@
         <!-- Logout Form -->
         <form action="{% url 'logout' %}" method="post" style="margin: 0;">
             {% csrf_token %}
-            <button type="submit">
-                Logout
-            </button>
+            <button type="submit">Logout</button>
         </form>
     </div>
 
     <!-- AJAX Student Count Target -->
     <h2>Total Students: <span id="student-count">0</span></h2>
 
-    <!-- AJAX Status Feedback Messages -->
+    <!-- Search, Filter, Clear, and Refresh Controls -->
+    <section style="margin-bottom: 15px;">
+        <label for="student-search">Search name or email:</label>
+        <input type="search" id="student-search" placeholder="Type a name or email">
+
+        <label for="program-filter">Filter by program:</label>
+        <select id="program-filter">
+            <option value="">All programs</option>
+        </select>
+
+        <button type="button" id="clear-filters">Clear Filters</button>
+        <button type="button" id="refresh-students">Refresh Data</button>
+    </section>
+
+    <!-- Result Count Display -->
+    <p id="result-count" aria-live="polite">Showing 0 students</p>
+
+    <!-- AJAX Status Messages -->
     <p id="loading-message">Loading students...</p>
     <p id="error-message" style="color: red;"></p>
 
@@ -36,7 +51,7 @@
             </tr>
         </thead>
         <tbody id="student-table-body">
-            <!-- Populated dynamically via student_dashboard.js -->
+            <!-- Populated dynamically via JavaScript -->
         </tbody>
     </table>
 
@@ -65,7 +80,6 @@
     <hr>
     <a href="{% url 'student_list' %}">Back to Student List</a>
 
-    <!-- JavaScript File -->
     <script src="{% static 'registration/js/student_dashboard.js' %}"></script>
 </body>
 </html>
